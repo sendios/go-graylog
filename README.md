@@ -1,5 +1,6 @@
 # go-graylog
 
+Example:
 
 ```
 package main
