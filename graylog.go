@@ -113,7 +113,6 @@ func (logger GrayLog) log(level int32, mess string, context Context) error {
 		Short:    mess,
 		TimeUnix: float64(time.Now().Unix()),
 		Level:    level,
-		Facility: "0",
 		Extra:    context,
 	}
 
