@@ -1,4 +1,4 @@
-module go-graylog
+module github.com/mailfire/go-graylog
 
 go 1.13
 
