@@ -19,10 +19,10 @@ const (
 )
 
 type GrayLog struct {
-	writer   *gelf.Writer
-	hostName string
-	version  string
-	codebase string
+	writer          *gelf.Writer
+	hostName        string
+	version         string
+	codebase        string
 	maxLevelLogging int32
 }
 
@@ -85,6 +85,12 @@ func (logger GrayLog) Alert(mess string, context Context) error {
 
 func (logger GrayLog) Emergency(mess string, context Context) error {
 	return logger.log(LOG_EMERG, mess, context)
+}
+
+func (logger GrayLog) Write(p []byte) (n int, err error) {
+	mess := string(p)
+
+	return len(mess), logger.Info(mess, Context{})
 }
 
 func (logger GrayLog) isCanWrite(level int32) bool {
