@@ -39,7 +39,7 @@ func (logger *GrayLog) Init(url string, port int, codebase string) error {
 	logger.codebase = codebase
 
 	if logger.maxLevelLogging == 0 {
-		logger.maxLevelLogging = 3
+		logger.maxLevelLogging = LOG_ERR
 	}
 
 	addr := fmt.Sprintf("%s:%d", url, port)
