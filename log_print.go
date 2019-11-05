@@ -49,18 +49,19 @@ func (l LogPrint) Emergency(mess string, context Context) error {
 	return l.log("emergency", mess, context)
 }
 
-func (l LogPrint) formatMess(level string, mess string) string {
+func (l LogPrint) log(level string, mess string, context Context) error {
+	date := time.Now().Format("01-02-2006 15:04:05")
+	logMess := fmt.Sprintf("%s  Level: %s, Message %s, Context: %v \n", date, level, mess, context)
+	l.formatMess(level, logMess)
+	return nil
+}
+
+func (l LogPrint) formatMess(level string, mess string) {
 
 	fStr, ok := colorLevels[level]
 	if ok {
-		return fmt.Sprintf(fStr, mess)
+		fmt.Printf(fStr, mess)
 	}
 
-	return mess
-}
-
-func (l LogPrint) log(level string, mess string, context Context) error {
-	date := time.Now().Format("01-02-2006 15:04:05")
-	fmt.Printf("%s  Level: %s, Message %s, Context: %v \n", date, level, l.formatMess(level, mess), context)
-	return nil
+	fmt.Println(fStr, mess)
 }
