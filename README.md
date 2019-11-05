@@ -12,7 +12,8 @@ import (
 )
 
 func main() {
-	logger := go_graylog.GrayLog{}
+    logger := 
+	grayLogger := go_graylog.GrayLog{}
 	err := logger.Init("localhost", 15501, "test")
 	if err != nil {
 		fmt.Println(err)
