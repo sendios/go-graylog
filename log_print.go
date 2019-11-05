@@ -2,6 +2,7 @@ package go_graylog
 
 import (
 	"fmt"
+	"time"
 )
 
 type LogPrint struct{}
@@ -59,6 +60,7 @@ func (l LogPrint) formatMess(level string, mess string) string {
 }
 
 func (l LogPrint) log(level string, mess string, context Context) error {
-	fmt.Printf("Level: %s, Message %s, Context: %v \n", level, l.formatMess(level, mess), context)
+	date := time.Now().Format("01-02-2006 15:04:05")
+	fmt.Printf("%s  Level: %s, Message %s, Context: %v \n", date, level, l.formatMess(level, mess), context)
 	return nil
 }
