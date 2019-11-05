@@ -85,7 +85,7 @@ func (l Logger) write(mess string, context Context, level int32) {
 }
 
 func (l Logger) prepareData(mess string, context Context) (string, Context) {
-	m := time.Now().Format("01-02-2006 15:04:05") + mess
+	m := time.Now().Format("01-02-2006 15:04:05") + "   " + mess
 	return m, context
 }
 
