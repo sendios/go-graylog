@@ -5,14 +5,14 @@ import (
 )
 
 const (
-	LOG_EMERG   = int32(0)
-	LOG_ALERT   = int32(1)
-	LOG_CRIT    = int32(2)
-	LOG_ERR     = int32(3)
-	LOG_WARNING = int32(4)
-	LOG_NOTICE  = int32(5)
-	LOG_INFO    = int32(6)
-	LOG_DEBUG   = int32(7)
+	LogEmerg   = int32(0)
+	LogAlert   = int32(1)
+	LogCrit    = int32(2)
+	LogErr     = int32(3)
+	LogWarning = int32(4)
+	LogNotice  = int32(5)
+	LogInfo    = int32(6)
+	LogDebug   = int32(7)
 )
 
 type Context map[string]interface{}
@@ -46,35 +46,35 @@ func (l *Logger) AddLoggerWriter(w LoggerWriter, maxLogLevel int32) {
 }
 
 func (l Logger) Debug(mess string, context Context) {
-	l.write(mess, context, LOG_DEBUG)
+	l.write(mess, context, LogDebug)
 }
 
 func (l Logger) Info(mess string, context Context) {
-	l.write(mess, context, LOG_INFO)
+	l.write(mess, context, LogInfo)
 }
 
 func (l Logger) Notice(mess string, context Context) {
-	l.write(mess, context, LOG_NOTICE)
+	l.write(mess, context, LogNotice)
 }
 
 func (l Logger) Warning(mess string, context Context) {
-	l.write(mess, context, LOG_WARNING)
+	l.write(mess, context, LogWarning)
 }
 
 func (l Logger) Error(mess string, context Context) {
-	l.write(mess, context, LOG_ERR)
+	l.write(mess, context, LogErr)
 }
 
 func (l Logger) Critical(mess string, context Context) {
-	l.write(mess, context, LOG_CRIT)
+	l.write(mess, context, LogCrit)
 }
 
 func (l Logger) Alert(mess string, context Context) {
-	l.write(mess, context, LOG_ALERT)
+	l.write(mess, context, LogAlert)
 }
 
 func (l Logger) Emergency(mess string, context Context) {
-	l.write(mess, context, LOG_EMERG)
+	l.write(mess, context, LogEmerg)
 }
 
 func (l Logger) write(mess string, context Context, level int32) {
@@ -96,19 +96,19 @@ func (l Logger) writeToLoggerItem(loggerItem LoggerItem, mess string, context Co
 	}
 
 	switch level {
-	case LOG_CRIT:
+	case LogCrit:
 		_ = loggerItem.writer.Critical(mess, context)
-	case LOG_WARNING:
+	case LogWarning:
 		_ = loggerItem.writer.Warning(mess, context)
-	case LOG_EMERG:
+	case LogEmerg:
 		_ = loggerItem.writer.Emergency(mess, context)
-	case LOG_ALERT:
+	case LogAlert:
 		_ = loggerItem.writer.Alert(mess, context)
-	case LOG_NOTICE:
+	case LogNotice:
 		_ = loggerItem.writer.Notice(mess, context)
-	case LOG_DEBUG:
+	case LogDebug:
 		_ = loggerItem.writer.Debug(mess, context)
-	case LOG_INFO:
+	case LogInfo:
 		_ = loggerItem.writer.Info(mess, context)
 	}
 }

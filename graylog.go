@@ -34,35 +34,35 @@ func (logger *GrayLog) Init(url string, port int, codebase string) error {
 }
 
 func (logger GrayLog) Debug(mess string, context Context) error {
-	return logger.log(LOG_DEBUG, mess, context)
+	return logger.log(LogDebug, mess, context)
 }
 
 func (logger GrayLog) Info(mess string, context Context) error {
-	return logger.log(LOG_INFO, mess, context)
+	return logger.log(LogInfo, mess, context)
 }
 
 func (logger GrayLog) Notice(mess string, context Context) error {
-	return logger.log(LOG_NOTICE, mess, context)
+	return logger.log(LogNotice, mess, context)
 }
 
 func (logger GrayLog) Warning(mess string, context Context) error {
-	return logger.log(LOG_WARNING, mess, context)
+	return logger.log(LogWarning, mess, context)
 }
 
 func (logger GrayLog) Error(mess string, context Context) error {
-	return logger.log(LOG_ERR, mess, context)
+	return logger.log(LogErr, mess, context)
 }
 
 func (logger GrayLog) Critical(mess string, context Context) error {
-	return logger.log(LOG_CRIT, mess, context)
+	return logger.log(LogCrit, mess, context)
 }
 
 func (logger GrayLog) Alert(mess string, context Context) error {
-	return logger.log(LOG_ALERT, mess, context)
+	return logger.log(LogAlert, mess, context)
 }
 
 func (logger GrayLog) Emergency(mess string, context Context) error {
-	return logger.log(LOG_EMERG, mess, context)
+	return logger.log(LogEmerg, mess, context)
 }
 
 func (logger GrayLog) Write(p []byte) (n int, err error) {
