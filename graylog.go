@@ -7,26 +7,12 @@ import (
 	"time"
 )
 
-const (
-	LOG_EMERG   = int32(0)
-	LOG_ALERT   = int32(1)
-	LOG_CRIT    = int32(2)
-	LOG_ERR     = int32(3)
-	LOG_WARNING = int32(4)
-	LOG_NOTICE  = int32(5)
-	LOG_INFO    = int32(6)
-	LOG_DEBUG   = int32(7)
-)
-
 type GrayLog struct {
-	writer          *gelf.Writer
-	hostName        string
-	version         string
-	codebase        string
-	maxLevelLogging int32
+	writer   *gelf.Writer
+	hostName string
+	version  string
+	codebase string
 }
-
-type Context map[string]interface{}
 
 func (logger *GrayLog) Init(url string, port int, codebase string) error {
 	logger.version = "1.0"
@@ -38,10 +24,6 @@ func (logger *GrayLog) Init(url string, port int, codebase string) error {
 	logger.hostName = hostName
 	logger.codebase = codebase
 
-	if logger.maxLevelLogging == 0 {
-		logger.maxLevelLogging = LOG_ERR
-	}
-
 	addr := fmt.Sprintf("%s:%d", url, port)
 	logger.writer, err = gelf.NewWriter(addr)
 	if err != nil {
@@ -49,10 +31,6 @@ func (logger *GrayLog) Init(url string, port int, codebase string) error {
 	}
 
 	return nil
-}
-
-func (logger *GrayLog) SetMaxLevelLogging(maxLevelLogging int32) {
-	logger.maxLevelLogging = maxLevelLogging
 }
 
 func (logger GrayLog) Debug(mess string, context Context) error {
@@ -93,15 +71,7 @@ func (logger GrayLog) Write(p []byte) (n int, err error) {
 	return len(mess), logger.Info(mess, Context{})
 }
 
-func (logger GrayLog) isCanWrite(level int32) bool {
-	return logger.maxLevelLogging >= level
-}
-
 func (logger GrayLog) log(level int32, mess string, context Context) error {
-
-	if !logger.isCanWrite(level) {
-		return nil
-	}
 
 	if _, ok := context["codebase"]; !ok {
 		context["codebase"] = logger.codebase
