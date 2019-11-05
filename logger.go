@@ -95,6 +95,8 @@ func (l Logger) writeToLoggerItem(loggerItem LoggerItem, mess string, context Co
 		_ = loggerItem.writer.Critical(mess, context)
 	case LogWarning:
 		_ = loggerItem.writer.Warning(mess, context)
+	case LogErr:
+		_ = loggerItem.writer.Error(mess, context)
 	case LogEmerg:
 		_ = loggerItem.writer.Emergency(mess, context)
 	case LogAlert:
