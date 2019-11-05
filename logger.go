@@ -30,7 +30,7 @@ type LoggerItem struct {
 }
 
 func (logger LoggerItem) isCanWrite(level int32) bool {
-	return logger.maxLogLevel <= level
+	return logger.maxLogLevel >= level
 }
 
 type Logger struct {
