@@ -61,7 +61,7 @@ func (l LogPrint) formatMess(level string, mess string) {
 	fStr, ok := colorLevels[level]
 	if ok {
 		fmt.Printf(fStr, mess)
+	} else {
+		fmt.Println(mess)
 	}
-
-	fmt.Println(fStr, mess)
 }

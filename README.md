@@ -7,26 +7,30 @@ package main
 
 import (
 	"fmt"
-	"github.com/mailfire/go-graylog"
-	"log"
+	go_graylog "github.com/mailfire/go-graylog"
 )
 
+
+
 func main() {
-    logger := 
-	grayLogger := go_graylog.GrayLog{}
-	err := logger.Init("localhost", 15501, "test")
+	logger := go_graylog.Logger{}
+
+	fmtLogger := go_graylog.LogPrint{}
+	logger.AddLoggerWriter(fmtLogger, go_graylog.LogDebug)
+
+	grayLog := go_graylog.GrayLog{}
+	err := grayLog.Init("graylog.mailfire", 12201, "test")
 	if err != nil {
 		fmt.Println(err)
-		return
+	} else {
+		logger.AddLoggerWriter(&grayLog, go_graylog.LogErr)
 	}
 
-	logger.SetMaxLevelLogging(go_graylog.LOG_INFO)
-	err = logger.Info("test_go", go_graylog.Context{})
 
-	if err != nil {
-		fmt.Println(err)
-	}
-	//You may use this as
-	log.SetOutput(&logger)
+	logger.Info("test_go", go_graylog.Context{
+		"something": "some",
+		"_file": "file.log",
+		"_line": 34,
+	})
 }
 ```
