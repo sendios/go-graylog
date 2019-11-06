@@ -51,7 +51,7 @@ func (l LogPrint) Emergency(mess string, context Context) error {
 
 func (l LogPrint) log(level string, mess string, context Context) error {
 	date := time.Now().Format("01-02-2006 15:04:05")
-	logMess := fmt.Sprintf("%s  Level: %s, Message %s, Context: %v \n", date, level, mess, context)
+	logMess := fmt.Sprintf("%s %s Message: %s, Context: %v \n", date, level, mess, context)
 	l.formatMess(level, logMess)
 	return nil
 }
