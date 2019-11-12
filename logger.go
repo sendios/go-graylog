@@ -1,10 +1,5 @@
 package go_graylog
 
-import (
-	"fmt"
-	"runtime/debug"
-)
-
 const (
 	LogEmerg   = int32(0)
 	LogAlert   = int32(1)
@@ -112,12 +107,5 @@ func (l Logger) writeToLoggerItem(loggerItem LoggerItem, mess string, context Co
 		_ = loggerItem.writer.Debug(mess, context)
 	case LogInfo:
 		_ = loggerItem.writer.Info(mess, context)
-	}
-}
-
-func (l Logger) Recover() {
-	if r := recover(); r != nil {
-		stack := debug.Stack()
-		l.Error(fmt.Sprintf("Fatal: %s", r), Context{"trace": string(stack)})
 	}
 }
