@@ -14,7 +14,13 @@ import (
 
 func main() {
 	logger := go_graylog.Logger{}
-	defer logger.Recover()
+	
+	defer func() {
+    	   f r := recover(); r != nil {
+    		stack := debug.Stack()
+    	    logger.Critical(fmt.Sprintf("Fatal: %s", r), go_graylog.Context{"trace": string(stack)})
+    	   }
+        }()
 
 	fmtLogger := go_graylog.LogPrint{}
 	logger.AddWriter(fmtLogger, go_graylog.LogDebug)
