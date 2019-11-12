@@ -1,5 +1,10 @@
 package go_graylog
 
+import (
+	"fmt"
+	"runtime/debug"
+)
+
 const (
 	LogEmerg   = int32(0)
 	LogAlert   = int32(1)
@@ -13,7 +18,7 @@ const (
 
 type Context map[string]interface{}
 
-type LoggerWriter interface {
+type LogWriter interface {
 	Debug(mess string, context Context) error
 	Info(mess string, context Context) error
 	Notice(mess string, context Context) error
@@ -25,7 +30,7 @@ type LoggerWriter interface {
 }
 
 type LoggerItem struct {
-	writer      LoggerWriter
+	writer      LogWriter
 	maxLogLevel int32
 }
 
@@ -37,7 +42,7 @@ type Logger struct {
 	loggerWrites []LoggerItem
 }
 
-func (l *Logger) AddLoggerWriter(w LoggerWriter, maxLogLevel int32) {
+func (l *Logger) AddWriter(w LogWriter, maxLogLevel int32) {
 	l.loggerWrites = append(l.loggerWrites, LoggerItem{w, maxLogLevel})
 }
 
@@ -107,5 +112,12 @@ func (l Logger) writeToLoggerItem(loggerItem LoggerItem, mess string, context Co
 		_ = loggerItem.writer.Debug(mess, context)
 	case LogInfo:
 		_ = loggerItem.writer.Info(mess, context)
+	}
+}
+
+func (l Logger) Recover() {
+	if r := recover(); r != nil {
+		stack := debug.Stack()
+		l.Error(fmt.Sprintf("Fatal: %s", r), Context{"trace": string(stack)})
 	}
 }

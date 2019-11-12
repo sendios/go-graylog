@@ -14,16 +14,17 @@ import (
 
 func main() {
 	logger := go_graylog.Logger{}
+	defer logger.Recover()
 
 	fmtLogger := go_graylog.LogPrint{}
-	logger.AddLoggerWriter(fmtLogger, go_graylog.LogDebug)
+	logger.AddWriter(fmtLogger, go_graylog.LogDebug)
 
 	grayLog := go_graylog.GrayLog{}
 	err := grayLog.Init("graylog.mailfire", 12201, "test")
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		logger.AddLoggerWriter(&grayLog, go_graylog.LogErr)
+		logger.AddWriter(&grayLog, go_graylog.LogErr)
 	}
 
 
