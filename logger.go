@@ -81,7 +81,12 @@ func (l Logger) write(mess string, context Context, level int32) {
 }
 
 func (l Logger) prepareData(mess string, context Context) (string, Context) {
-	return mess, context
+	maxLen := 1024
+	if len(mess) < 1024 {
+		maxLen = len(mess)
+	}
+
+	return mess[0:maxLen], context
 }
 
 func (l Logger) writeToLoggerItem(loggerItem LoggerItem, mess string, context Context, level int32) {
