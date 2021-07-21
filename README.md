@@ -7,7 +7,7 @@ package main
 
 import (
 	"fmt"
-	go_graylog "github.com/mailfire/go-graylog"
+	go_graylog "github.com/sendios/go-graylog"
 )
 
 
@@ -26,7 +26,7 @@ func main() {
 	logger.AddWriter(fmtLogger, go_graylog.LogDebug)
 
 	grayLog := go_graylog.GrayLog{}
-	err := grayLog.Init("graylog.mailfire", 12201, "test")
+	err := grayLog.Init("graylog.sendios", 12201, "test")
 	if err != nil {
 		fmt.Println(err)
 	} else {
